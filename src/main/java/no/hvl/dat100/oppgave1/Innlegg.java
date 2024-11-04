@@ -10,7 +10,7 @@ public abstract class Innlegg {
 	
 	
 	public Innlegg() {
-	
+		
 	}
 	
 	public Innlegg(int id, String bruker, String dato) {
