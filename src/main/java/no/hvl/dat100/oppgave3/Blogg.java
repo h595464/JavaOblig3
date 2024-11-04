@@ -3,17 +3,19 @@ package no.hvl.dat100.oppgave3;
 import no.hvl.dat100.common.TODO;
 import no.hvl.dat100.oppgave1.Innlegg;
 
+import java.util.Arrays;
+
 public class Blogg {
-    private Innlegg[] innleggTabell;
+    private final Innlegg[] innleggTabell;
     private int nesteledige;
 
     public Blogg() {
-        Innlegg[] innleggTabell = new Innlegg[19];
+        this.innleggTabell = new Innlegg[20];
     }
 
     public Blogg(int lengde) {
-        innleggTabell = new Innlegg[lengde];
-        nesteledige = 0;
+        this.innleggTabell = new Innlegg[lengde];
+        this.nesteledige = 0;
     }
 
     public int getAntall() {
@@ -33,7 +35,7 @@ public class Blogg {
 
     public int finnInnlegg(Innlegg innlegg) {
         for (int i = 0; i < innleggTabell.length; i++) {
-            if (innleggTabell[i].getId() == innlegg.getId()) {
+            if (innleggTabell[i] != null && innleggTabell[i].getId() == innlegg.getId()) {
                 return i;
             }
         }
@@ -42,7 +44,7 @@ public class Blogg {
 
     public boolean finnes(Innlegg innlegg) {
         for (int i = 0; i < innleggTabell.length; i++) {
-            if (innleggTabell[i].getId() == innlegg.getId()) {
+            if (innleggTabell[i] != null && innleggTabell[i].getId() == innlegg.getId()) {
                 return true;
             }
         }
@@ -60,9 +62,9 @@ public class Blogg {
     }
 
     public boolean leggTil(Innlegg innlegg) {
-        for (int i = 0; i < innleggTabell.length - 1; i++) {
-            if (!finnes(innlegg)) {
-                if (ledigPlass()) {
+        if (ledigPlass() && !finnes(innlegg)) {
+            for (int i = 0; i < innleggTabell.length; i++) {
+                if (innleggTabell[i] == null) {
                     innleggTabell[i] = innlegg;
                     return true;
                 }
@@ -72,7 +74,11 @@ public class Blogg {
     }
 
     public String toString() {
-        throw new UnsupportedOperationException(TODO.method());
+        //kanskje en litt dårlig måte å gjøre det på men jaja
+        String StrengFør = getAntall() + "\n" + Arrays.toString(getSamling());
+        String FixetStreng = StrengFør.replaceAll(", ", "");
+        String StrengFix2 = FixetStreng.replace("[", "");
+        return StrengFix2.replace("]", "");
     }
 
     // valgfrie oppgaver nedenfor
