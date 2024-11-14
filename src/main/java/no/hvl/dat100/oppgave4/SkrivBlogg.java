@@ -1,15 +1,24 @@
 package no.hvl.dat100.oppgave4;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import no.hvl.dat100.oppgave3.Blogg;
 
-import no.hvl.dat100.common.TODO;
-import no.hvl.dat100.oppgave3.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class SkrivBlogg {
 
-	public static boolean skriv(Blogg samling, String mappe, String filnavn) {
-
-		throw new UnsupportedOperationException(TODO.method());
-	}
+    public static boolean skriv(Blogg samling, String mappe, String filnavn) {
+        File file = new File(mappe, filnavn);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            String innhold = samling.toString();
+            writer.write(innhold);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
